@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isJumping = false;
     private Rigidbody rb = null;
 
+    [SerializeField] private Transform cameraTransform;
     [SerializeField] private float moveSpeed = 8f;
     [SerializeField] private float jumpForce = 5f;
 
@@ -17,7 +18,6 @@ public class PlayerMovement : MonoBehaviour
     {
         input = new CustomInput();
         rb = GetComponent<Rigidbody>();
-
     }
 
     private void OnEnable()
@@ -38,8 +38,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // Make the player move towards where the camera is pointing
+        moveVector = Quaternion.AngleAxis(cameraTransform.rotation.eulerAngles.y, Vector3.up) * moveVector;
+        moveVector.Normalize();
         rb.velocity = new Vector3(moveVector.x * moveSpeed, rb.velocity.y, moveVector.y * moveSpeed);
-        
     }
 
     private void OnMovementPerformed(InputAction.CallbackContext value)
@@ -71,5 +73,17 @@ public class PlayerMovement : MonoBehaviour
     {
         if(collision.gameObject.tag == "Floor")
             isJumping = true;
+    }
+
+    private void OnApplicationFocus(bool focus)
+    {
+        if(focus)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
     }
 }
