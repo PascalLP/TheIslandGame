@@ -44,4 +44,12 @@ public class InputReader : MonoBehaviour, CustomInput.IPlayerActions
     {
         MoveComposite = context.ReadValue<Vector2>();
     }
+
+    public void OnRun(InputAction.CallbackContext context)
+    {
+        if (!context.performed)
+            return;
+
+        //OnRunPerformed?.Invoke();
+    }
 }

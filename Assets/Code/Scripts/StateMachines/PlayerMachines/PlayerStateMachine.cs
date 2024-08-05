@@ -11,7 +11,7 @@ public class PlayerStateMachine : StateMachine
     public Vector3 Velocity;
     public float MovementSpeed { get; private set; } = 5f;
     public float JumpForce { get; private set; } = 5f;
-    public float LookRotationDampFactor { get; private set; } = 10f;
+    public float LookRotationDampFactor { get; private set; } = 15f;
     public Transform MainCamera { get; private set; }
     public InputReader InputReader { get; private set; }
     public Animator Animator { get; private set; }
